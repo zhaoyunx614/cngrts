@@ -10,6 +10,34 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&amp;display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <style>
+    .hidden {
+      display: none !important;
+    }
+    html, body {
+      height: 100vh;
+      overflow: hidden !important;
+      position: relative;
+    }
+
+    #welcome-screen,
+    #congrats-screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 20;
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #congrats-screen {
+      z-index: 30;
+    }
    /* Hogwarts style font fallback */
     body {
       font-family: 'MedievalSharp', cursive, serif;
@@ -377,7 +405,7 @@
   <div id="shadow-bg"></div>
   <div id="stars" aria-hidden="true"></div>
   <!-- Welcome Screen -->
-  <section class="z-20 w-full max-w-md mx-auto flex flex-col items-center justify-center min-h-screen" id="welcome-screen">
+  <section class="z-20 w-full flex flex-col items-center justify-center min-h-screen" id="welcome-screen">
    <h1 class="text-4xl sm:text-5xl font-bold mb-8 text-center select-none" style="text-shadow: 0 0 8px #f9d71c, 0 0 15px #f9d71c;">
     Magical Invitation
    </h1>
@@ -401,12 +429,12 @@
    </p>
   </section>
   <!-- Congratulations Screen -->
-  <section aria-live="polite" class="relative z-30 w-full max-w-md mx-auto min-h-screen grid grid-rows-4 grid-cols-4 gap-2 p-4 show" id="congrats-screen" style="grid-template-rows: 1fr 1fr 1fr 1fr; grid-template-columns: 1fr 1fr 1fr 1fr;">
+  <section aria-live="polite" class="relative z-30 w-full max-w-md mx-auto min-h-screen grid grid-rows-4 grid-cols-4 gap-2 p-4 hidden" id="congrats-screen" style="grid-template-rows: 1fr 1fr 1fr 1fr; grid-template-columns: 1fr 1fr 1fr 1fr;">
    <!-- 16 boxes grid -->
    <!-- Very Top Row -->
    <div class="col-span-1 row-span-1 flex items-center justify-center"></div>
    <div class="flex flex-col items-center justify-center">
-    <h2 class="congrats-text text-5xl sm:text-3xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:4rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
+    <h2 class="congrats-text text-5xl sm:text-3xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:1rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
      Congratulations <span id="congrats-name" class="text-white"></span>,<!-- Name will be inserted here -->
      <br/>
     </h2>
@@ -420,8 +448,8 @@
     <img alt="University logo, a medieval crest with a golden lion and a book on a dark blue shield, surrounded by ornate golden filigree" height="300" id="university-logo" src="assets/logo1.png" width="300"/>
    </div>
    <!-- Very Bottom Row -->
-   <div class="col-span-4 row-span-6 flex flex-col items-center justify-center space-y-2 -mt-2">
-    <p class="welcome-text text-3xl sm:text-xl font-semibold text-yellow-300 text-center select-none" style="margin-top:-6rem; text-shadow: 0 0 6px #f9d71c;">
+   <div class="col-span-4 flex flex-col items-center justify-center space-y-2 -mt-2">
+    <p class="welcome-text text-3xl sm:text-xl font-semibold text-yellow-300 text-center select-none" style="margin-top:2rem; text-shadow: 0 0 6px #f9d71c;">
      Welcome to the enchanted halls of knowledge. <!-- Welcome text-->
     </p>
     <p class="wishes-text text-base sm:text-lg italic text-yellow-200 text-center select-none" style="text-shadow: 0 0 8px #f9d71c;">
