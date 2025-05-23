@@ -198,6 +198,14 @@
       transition: opacity 1.5s ease, transform 1.5s ease;
       z-index: 30;
       position: relative;
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      padding: 1rem;
+      max-width: 28rem;
+      margin: 0 auto;
+      min-height: 100vh;
     }
     #congrats-screen.show {
       opacity: 1;
@@ -220,17 +228,63 @@
     }
 
     /* Responsive adjustments */
-    @media (max-width: 400px) {
+    @media (max-width: 768px) {
       #congrats-screen {
-        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+        min-height: auto;
+        max-width: 100%;
+        gap: 1.5rem;
       }
       #logo-container {
-        grid-column: 1 / span 4;
-        grid-row: 2 / span 2;
+        grid-column: auto;
+        grid-row: auto;
+        width: 80vw;
+        max-width: 280px;
+        margin: 0 auto;
       }
       #logo-container img {
         max-height: 180px;
         width: auto;
+      }
+      #congrats-screen > div.flex.flex-col.items-center.justify-center {
+        margin-top: 0;
+      }
+      #congrats-screen > div.col-span-4.flex.flex-col.items-center.justify-center.space-y-2.-mt-2 {
+        margin-top: 0;
+        padding: 0 1rem;
+      }
+      #congrats-screen h2.congrats-text {
+        font-size: 2.5rem;
+        margin-top: 0;
+      }
+      #congrats-screen h3 {
+        font-size: 1.75rem;
+      }
+      .welcome-text {
+        font-size: 1.25rem !important;
+        margin-top: 0 !important;
+      }
+      .wishes-text {
+        font-size: 1rem !important;
+      }
+    }
+
+    @media (max-width: 400px) {
+      #congrats-screen h2.congrats-text {
+        font-size: 2rem;
+      }
+      #congrats-screen h3 {
+        font-size: 1.5rem;
+      }
+      .welcome-text {
+        font-size: 1rem !important;
+      }
+      .wishes-text {
+        font-size: 0.875rem !important;
       }
     }
 
@@ -399,15 +453,65 @@
         filter: drop-shadow(0 0 0 #f9d71c);
       }
     }
+
+    /* Sound button styles */
+    .sound-button {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 100;
+      background: rgba(0,0,0,0.5);
+      border-radius: 9999px;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    .sound-button:hover {
+      background: rgba(0,0,0,0.8);
+    }
+    .sound-button svg {
+      color: #f9d71c;
+      width: 1.5rem;
+      height: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    .sound-button.muted svg {
+      color: #555;
+      transform: rotate(-20deg);
+    }
   </style>
  </head>
  <body class="relative overflow-hidden min-h-screen flex flex-col items-center justify-center px-4">
   <div id="shadow-bg"></div>
   <div id="stars" aria-hidden="true"></div>
+
+  <!-- Sound button for welcome screen -->
+  <button id="sound-btn-welcome" aria-label="Toggle sound" class="sound-button" title="Toggle sound">
+    <svg id="sound-icon-welcome" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+      <path d="M16.5 12a4.5 4.5 0 0 1-4.5 4.5v-9A4.5 4.5 0 0 1 16.5 12z"/>
+      <path d="M19.5 12a7.5 7.5 0 0 1-7.5 7.5v-3a4.5 4.5 0 0 0 4.5-4.5 4.5 4.5 0 0 0-4.5-4.5v-3a7.5 7.5 0 0 1 7.5 7.5z"/>
+    </svg>
+  </button>
+
+  <!-- Sound button for congrats screen -->
+  <button id="sound-btn-congrats" aria-label="Toggle sound" class="sound-button hidden" title="Toggle sound">
+    <svg id="sound-icon-congrats" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+      <path d="M16.5 12a4.5 4.5 0 0 1-4.5 4.5v-9A4.5 4.5 0 0 1 16.5 12z"/>
+      <path d="M19.5 12a7.5 7.5 0 0 1-7.5 7.5v-3a4.5 4.5 0 0 0 4.5-4.5 4.5 4.5 0 0 0-4.5-4.5v-3a7.5 7.5 0 0 1 7.5 7.5z"/>
+    </svg>
+  </button>
+
   <!-- Welcome Screen -->
   <section class="z-20 w-full flex flex-col items-center justify-center min-h-screen" id="welcome-screen">
    <h1 class="text-4xl sm:text-5xl font-bold mb-8 text-center select-none" style="text-shadow: 0 0 8px #f9d71c, 0 0 15px #f9d71c;">
-    Magical Invitation
+    A Missive from the Masters
    </h1>
    <form class="w-full flex flex-col items-center gap-6" id="name-form" novalidate="">
     <label class="text-xl sm:text-2xl mb-2 select-none" for="name-input" style="text-shadow: 0 0 6px #f9d71c;">
@@ -434,11 +538,11 @@
    <!-- Very Top Row -->
    <div class="col-span-1 row-span-1 flex items-center justify-center"></div>
    <div class="flex flex-col items-center justify-center">
-    <h2 class="congrats-text text-5xl sm:text-3xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:1rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
+    <h2 class="congrats-text text-5xl sm:text-5xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:4rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
      Congratulations <span id="congrats-name" class="text-white"></span>,<!-- Name will be inserted here -->
      <br/>
     </h2>
-    <h3 class="text-xl sm:text-3xl font-extrabold text-yellow-400 text-center select-none" style="text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
+    <h3 class="text-xl sm:text-xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:2rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
      you've been sorted into...
     </h3>
    </div>
@@ -449,10 +553,10 @@
    </div>
    <!-- Very Bottom Row -->
    <div class="col-span-4 flex flex-col items-center justify-center space-y-2 -mt-2">
-    <p class="welcome-text text-3xl sm:text-xl font-semibold text-yellow-300 text-center select-none" style="margin-top:2rem; text-shadow: 0 0 6px #f9d71c;">
+    <p class="welcome-text text-4xl sm:text-4xl font-semibold text-yellow-300 text-center select-none" style="margin-top:-6rem; text-shadow: 0 0 6px #f9d71c;">
      Welcome to the enchanted halls of knowledge. <!-- Welcome text-->
     </p>
-    <p class="wishes-text text-base sm:text-lg italic text-yellow-200 text-center select-none" style="text-shadow: 0 0 8px #f9d71c;">
+    <p class="wishes-text text-xl sm:text-xl italic text-yellow-200 text-center select-none" style="text-shadow: 0 0 8px #f9d71c;">
      May your journey be filled with magic and wonder.  <!-- wishes text -->
     </p>
    </div>
@@ -461,6 +565,11 @@
   <div aria-hidden="true" id="sparks"></div>
   <!-- Fireworks container -->
   <div aria-hidden="true" id="fireworks"></div>
+
+  <!-- Audio elements -->
+  <audio id="welcome-audio" src="assets/welcome_audio.mp3" loop preload="auto"></audio>
+  <audio id="congrats-audio" src="assets/congrats_audio.mp3" loop preload="auto"></audio>
+
   <script>
    (() => {
       const allowedNames = ['laiqa', 'raissa'];
@@ -474,7 +583,12 @@
       const universityLogo = document.getElementById('university-logo');
       const sealedLetter = document.getElementById('sealed-letter');
       const openLetterBtn = document.getElementById('open-letter-btn');
-      const starsContainer = document.getElementById('stars');
+      const welcomeAudio = document.getElementById('welcome-audio');
+      const congratsAudio = document.getElementById('congrats-audio');
+      const soundBtnWelcome = document.getElementById('sound-btn-welcome');
+      const soundBtnCongrats = document.getElementById('sound-btn-congrats');
+      const soundIconWelcome = document.getElementById('sound-icon-welcome');
+      const soundIconCongrats = document.getElementById('sound-icon-congrats');
 
       // Colors for fireworks and sparks separated
       const fireworkColors = [
@@ -648,6 +762,24 @@
         });
       }
 
+      // Sound control helpers
+      function updateSoundButton(button, icon, muted) {
+        if (muted) {
+          button.classList.add('muted');
+          icon.innerHTML = `
+            <path d="M16.5 12a4.5 4.5 0 0 1-4.5 4.5v-9a4.5 4.5 0 0 1 4.5 4.5z" fill="none"/>
+            <path d="M19 5l-14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          `;
+        } else {
+          button.classList.remove('muted');
+          icon.innerHTML = `
+            <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+            <path d="M16.5 12a4.5 4.5 0 0 1-4.5 4.5v-9A4.5 4.5 0 0 1 16.5 12z"/>
+            <path d="M19.5 12a7.5 7.5 0 0 1-7.5 7.5v-3a4.5 4.5 0 0 0 4.5-4.5 4.5 4.5 0 0 0-4.5-4.5v-3a7.5 7.5 0 0 1 7.5 7.5z"/>
+          `;
+        }
+      }
+
       // Main flow on form submit
       nameForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -669,31 +801,43 @@
         // Zoom into letter transition (sucking in effect)
         await zoomIntoLetterTransition();
 
-        // Set logo based on name
+        // Set logo and texts based on name
+        const capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+        document.getElementById('congrats-name').textContent = capitalized;
+
         if (name === 'laiqa') {
           universityLogo.src = 'assets/logo1.png';
-          document.getElementById('congrats-name').textContent = name.charAt(0).toUpperCase() + name.slice(1);
-          document.querySelector('.welcome-text').textContent = 'Welcome to the sacred studios of creation';
+          universityLogo.alt = "University logo, a medieval crest with a golden lion and a book on a dark blue shield, surrounded by ornate golden filigree";
+          document.querySelector('.welcome-text').textContent = 'Welcome to the Sacred Studios of Creation';
           document.querySelector('.wishes-text').textContent =
             'May your journey trace the lines of forgotten dreams,\nwhere stone speaks, light dances, and beauty endures.';
         } else if (name === 'raissa') {
           universityLogo.src = 'assets/logo2.png';
-          document.getElementById('congrats-name').textContent = name.charAt(0).toUpperCase() + name.slice(1);
-          document.querySelector('.welcome-text').textContent = 'Welcome to the fortified realms of digital defense';
+          universityLogo.alt = "University logo, a medieval crest with a silver dragon and a scroll on a dark green shield, surrounded by ornate silver filigree";
+          document.querySelector('.welcome-text').textContent = 'Welcome to the Fortified Realms of Digital Defense';
           document.querySelector('.wishes-text').textContent =
             'May your journey weave through shadows and code,\nwhere silence guards secrets, and vigilance becomes art.';
         }
 
-        // Hide welcome screen and sealed letter container
+        // Stop welcome audio and hide welcome sound button
+        welcomeAudio.pause();
+        soundBtnWelcome.classList.add('hidden');
+
+        // Show congrats screen with magical appear animation
         welcomeScreen.classList.add('hidden');
         sealedLetter.classList.remove('zooming', 'unsealing');
         welcomeScreen.classList.remove('zooming');
 
-        // Show congrats screen with magical appear animation
         congratsScreen.classList.remove('hidden');
         // Trigger reflow to restart animation
         void congratsScreen.offsetWidth;
         congratsScreen.classList.add('show');
+
+        // Start congrats audio and show congrats sound button
+        congratsAudio.muted = false;
+        congratsAudio.play().catch(() => {});
+        soundBtnCongrats.classList.remove('hidden');
+        updateSoundButton(soundBtnCongrats, soundIconCongrats, congratsAudio.muted);
 
         // Start fireworks and sparks
         startFireworks();
@@ -708,6 +852,36 @@
       window.addEventListener('load', () => {
         nameInput.focus();
         initStars(80);
+        // Try to play welcome audio automatically
+        welcomeAudio.muted = false;
+        congratsAudio.muted = false;
+        welcomeAudio.play().catch(() => {});
+        updateSoundButton(soundBtnWelcome, soundIconWelcome, welcomeAudio.muted);
+      });
+
+      // Sound button toggle handlers
+      soundBtnWelcome.addEventListener('click', () => {
+        if (welcomeAudio.muted) {
+          welcomeAudio.muted = false;
+        } else {
+          welcomeAudio.muted = true;
+        }
+        updateSoundButton(soundBtnWelcome, soundIconWelcome, welcomeAudio.muted);
+      });
+
+      soundBtnCongrats.addEventListener('click', () => {
+        if (congratsAudio.muted) {
+          congratsAudio.muted = false;
+        } else {
+          congratsAudio.muted = true;
+        }
+        updateSoundButton(soundBtnCongrats, soundIconCongrats, congratsAudio.muted);
+      });
+
+      // Pause congrats audio when user leaves page
+      window.addEventListener('beforeunload', () => {
+        congratsAudio.pause();
+        welcomeAudio.pause();
       });
     })();
   </script>
