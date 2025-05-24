@@ -3,7 +3,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>
-   Magical Congratulations App
+   Congrats Laiqa!
   </title>
   <script src="https://cdn.tailwindcss.com">
   </script>
@@ -276,11 +276,7 @@
         font-size: 1.75rem;
       }
       .welcome-text-line1, .welcome-text-line2 {
-        font-size: 1.25rem !important;
         margin-top: 0 !important;
-      }
-      .wishes-text {
-        font-size: 1rem !important;
       }
     }
 
@@ -290,12 +286,6 @@
       }
       #congrats-screen h3 {
         font-size: 1.5rem;
-      }
-      .welcome-text-line1, .welcome-text-line2 {
-        font-size: 1rem !important;
-      }
-      .wishes-text {
-        font-size: 0.875rem !important;
       }
     }
 
@@ -529,7 +519,7 @@
   </section>
 
   <!-- Welcome Screen -->
-  <section class="z-20 w-full flex flex-col items-center justify-center min-h-screen hidden" id="welcome-screen">   <h1 class="text-4xl sm:text-5xl font-bold mb-8 text-center select-none" style="text-shadow: 0 0 8px #f9d71c, 0 0 15px #f9d71c;">
+  <section class="z-20 w-full flex flex-col items-center justify-center min-h-screen hidden" id="welcome-screen">   <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-center select-none" style="text-shadow: 0 0 12px #f9d71c, 0 0 15px #f9d71c;">
     <span>A Missive from</span><br/>
     <span>the Circle of Magisters</span>
    </h1>
@@ -562,7 +552,7 @@
      Congratulations <span id="congrats-name" class="text-white"></span>,<!-- Name will be inserted here -->
      <br/>
     </h2>
-    <h3 class="text-xl sm:text-3xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:1rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
+    <h3 class="text-xl sm:text-2xl font-extrabold text-yellow-400 text-center select-none" style="margin-top:1rem; text-shadow: 0 0 10px #f9d71c, 0 0 20px #f9d71c;">
      you've been sorted into...
     </h3>
    </div>
@@ -573,12 +563,12 @@
    </div>
    <!-- Very Bottom Row -->
    <div class="col-span-4 flex flex-col items-center justify-center space-y-2 -mt-2">
-    <p class="welcome-text-line1 text-4xl sm:text-4xl font-semibold text-yellow-300 text-center select-none" style="margin-top:-6rem; text-shadow: 0 0 6px #f9d71c;">
+    <p class="welcome-text-line1 text-2xl sm:text-3xl font-semibold text-yellow-300 text-center select-none" style="margin-top:-6rem; text-shadow: 0 0 6px #f9d71c;">
      Welcome to the <!-- Welcome text-->
     </p>
-    <p class="welcome-text-line2 text-4xl sm:text-4xl md:text-2xl font-semibold text-yellow-300 text-center select-none whitespace-nowrap" style="text-shadow: 0 0 6px #f9d71c;">
+    <p class="welcome-text-line2 text-3xl sm:text-4xl md:text-5xl font-semibold text-white-300 text-center select-none" style="text-shadow: 0 0 12px #fffdf3;">
      enchanted halls of knowledge. <!-- Welcome text line 2 -->
-    <p class="wishes-text text-xl sm:text-xl italic text-yellow-200 text-center select-none" style="text-shadow: 0 0 8px #f9d71c;">
+    <p class="wishes-text text-xl sm:text-2xl italic text-yellow-300 text-center select-none" style="text-shadow: 0 0 8px #f9d71c;">
      May your journey be filled with magic and wonder.  <!-- wishes text -->
     </p>
    </div>
@@ -594,7 +584,7 @@
 
   <script>
    (() => {
-      const allowedNames = ['laiqa', 'raissa'];
+      const allowedNames = ['laiqa'];
       const welcomeScreen = document.getElementById('welcome-screen');
       const congratsScreen = document.getElementById('congrats-screen');
       const preWelcomeScreen = document.getElementById('pre-welcome-screen');
@@ -836,13 +826,6 @@
           document.querySelector('.welcome-text-line2').textContent = 'Sacred Studios of Creation';
           document.querySelector('.wishes-text').textContent =
             'May your journey trace the lines of forgotten dreams,\nwhere stone speaks, light dances, and beauty endures.';
-        } else if (name === 'raissa') {
-          universityLogo.src = 'assets/logo2.png';
-          universityLogo.alt = "University logo, a medieval crest with a silver dragon and a scroll on a dark green shield, surrounded by ornate silver filigree";
-          document.querySelector('.welcome-text-line1').textContent = 'Welcome to the';
-          document.querySelector('.welcome-text-line2').textContent = 'Fortified Realms of Digital Defense';
-          document.querySelector('.wishes-text').textContent =
-            'May your journey weave through shadows and code,\nwhere silence guards secrets, and vigilance becomes art.';
         }
 
         // Stop welcome audio and hide welcome sound button
