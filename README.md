@@ -1,3 +1,0 @@
-# cngrts
-CNGRTS
-for Laiqa
